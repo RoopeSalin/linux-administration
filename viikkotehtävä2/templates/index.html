@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Viikkotehtävä 2</title>
+    <script>
+        async function updateTime() {
+            try {
+                const response = await fetch('/time');
+                const data = await response.json();
+                document.getElementById('clock').innerText = data.time;
+            } catch (err) {
+                console.error('Error fetching time:', err);
+            }
+        }
+
+        setInterval(updateTime, 1000);
+        window.onload = updateTime;
+    </script>
+</head>
+<body>
+    <h1>Tämänhetkinen aika mySQL:ssä:</h1>
+    <h2 id="clock">{{ current_time }}</h2>
+</body>
