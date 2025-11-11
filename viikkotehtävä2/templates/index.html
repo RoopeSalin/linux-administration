@@ -8,7 +8,8 @@
             try {
                 const response = await fetch('/time');
                 const data = await response.json();
-                document.getElementById('clock').innerText = data.time;
+                document.getElementById('server-clock').innerText = data.server_time;
+                document.getElementById('finland-clock').innerText = data.finland_time;
             } catch (err) {
                 console.error('Error fetching time:', err);
             }
@@ -17,8 +18,21 @@
         setInterval(updateTime, 1000);
         window.onload = updateTime;
     </script>
+
+    <style>
+      html { color-scheme: light dark; }
+      body { width: 35em; margin: 0 auto; font-family: Tahoma, Verdana, Arial, sans-serif;}
+      h2 { text-align: center; }
+      .label { text-align: center; margin-bottom: 0; margin-top: 10%;}
+    </style>
 </head>
 <body>
-    <h1>Tämänhetkinen aika mySQL:ssä:</h1>
-    <h2 id="clock">{{ current_time }}</h2>
+    <h1 style="text-align:center; margin-top: 10%;">Tämänhetkinen aika:</h1>
+
+    <h2 class="label">Serverin aika:</h2>
+    <h2 id="server-clock">Loading...</h2>
+
+    <h2 class="label">Suomen aika:</h2>
+    <h2 id="finland-clock">Loading...</h2>
 </body>
+</html>

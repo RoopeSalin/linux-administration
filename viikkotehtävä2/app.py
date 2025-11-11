@@ -5,7 +5,6 @@ import pytz
 
 app = Flask(__name__)
 
-
 def get_current_time():
     conn = mysql.connector.connect(
         host="localhost",
@@ -21,12 +20,11 @@ def get_current_time():
 
     if row:
         server_time = row[0]
-        result = server_time.astimezone(pytz.timezone('Europe/Helsinki'))
-    else: 
-        result = None
-    
-    return result
-
+        # adjust timezone
+        finland_time = server_time.astimezone(pytz.timezone('Europe/Helsinki'))
+        return server_time, finland_time
+    else:
+        return None, None
 
 @app.route('/')
 def index():
@@ -34,9 +32,20 @@ def index():
 
 @app.route('/time')
 def time():
-    current_time = get_current_time()
-    return jsonify({'time': str(current_time.strftime("%Y-%m-%d %H:%M:%S"))})
-
+    server_time, finland_time = get_current_time()
+    
+    if server_time and finland_time:
+        response = {
+            'server_time': server_time.strftime("%H:%M:%S %d.%m.%Y"),
+            'finland_time': finland_time.strftime("%H:%M:%S %d.%m.%Y")
+        }
+    else:
+        response = {
+            'server_time': None,
+            'finland_time': None
+        }
+    
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
