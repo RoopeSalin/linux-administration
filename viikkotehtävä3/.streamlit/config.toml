@@ -1,0 +1,5 @@
+[server]
+port = 8501
+baseUrlPath = "/data-analysis"
+enableCORS = false
+enableXsrfProtection = false

@@ -1,6 +1,6 @@
 .env
-.streamlit
 venv
 __pycache__
 
 *.csv
+*.log
