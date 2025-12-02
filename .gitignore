@@ -1,6 +1,7 @@
 .env
-venv
+mosquitto
 __pycache__
+venv
 
 *.csv
 *.log
